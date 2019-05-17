@@ -25,23 +25,26 @@ def breitwigner():
     tk.Label(janela, text= "Entre com o valor da largura a meia altura (FWHM) do pico:").grid(row=6, column=0, columnspan=2)
     tk.Entry(janela).grid(row=6, column=2)
 
-'''    tk.Label(janela, text= "Entre com o valor da posição do máximo da distribuição (M):").grid(row=7, column=0, columnspan=2)
-    m1 = tk.Entry(janela).grid(row=7, column=2)
-    print(m1.get())
+    tk.Label(janela, text= "Entre com o valor da posição do máximo da distribuição (M):").grid(row=7, column=0, columnspan=2)
+    tk.Entry(janela).grid(row=7, column=2)
     
-    tk.Label(janela, text= "Entre com o valor do parâmtro a:").grid(row=8, column=0, columnspan=2)
-    a1 = tk.Entry(janela).grid(row=8, column=2)
-#    a = int(a1.get())
-    print(a1)
-    tk.Label(janela, text= "Entre com o valor do parâmetro b:").grid(row=9, column=0, columnspan=2)
-    b1 = tk.Entry(janela).grid(row=9, column=2)
-#    b = int(b1.get())
-    print(b1)
-    tk.Label(janela, text= "Entre com o valor do parâmetro A:").grid(row=10, column=0, columnspan=2)
-    A1 = tk.Entry(janela).grid(row=10, column=2)
-#    A = int(A1.get())
-    print(A1)'''
+    tk.Label(janela, text= "Entre com o valor do parâmtro a que é a inclinação usada para perceber o efeito do background:").grid(row=8, column=0, columnspan=2)
+    tk.Entry(janela).grid(row=8, column=2)
+
+    tk.Label(janela, text= "Entre com o valor do parâmetro b de intercepção no eixo y usada para perceber o efeito do background:").grid(row=9, column=0, columnspan=2)
+    tk.Entry(janela).grid(row=9, column=2)
+
+    tk.Label(janela, text= "Entre com o valor do parâmetro A da altura da distribuição de Breit-Wigner:").grid(row=10, column=0, columnspan=2)
+    tk.Entry(janela).grid(row=10, column=2)
+
 #    return a*E+b+A*((2*np.sqrt(2)*M*gamma*np.sqrt(M**2*(M**2+gamma**2)))/(np.pi*np.sqrt(M**2+np.sqrt(M**2*(M**2+gamma**2)))))/((E**2-M**2)**2+M**2*gamma**2)
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
+def gauss():
+    tk.Label(janela, text= "Entre com o valor da largura a meia altura (FWHM) do pico:").grid(row=6, column=0, columnspan=2)
+    tk.Entry(janela).grid(row=6, column=2)
+
+    tk.Label(janela, text= "Entre com o valor da posição do máximo da distribuição:").grid(row=7, column=0, columnspan=2)
+    tk.Entry(janela).grid(row=7, column=2)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 janela = tk.Tk() # Cria uma janela
 janela.title('Curva de fit') # Define o título da janela.
@@ -51,11 +54,11 @@ tk.Button(janela, text='Abrir arquivo', font=('Times', '12', 'bold'), command=Ab
 
 tk.Label(janela, text= "Escolha o pico para calcular o Fit?").grid(row=1, column=0, columnspan=2)
 
-ck1 = tk.Checkbutton(janela, text= "Rho").grid(row=2, column=0)
-ck2 = tk.Checkbutton(janela, text= "Phi").grid(row=2, column=1)
-ck3 = tk.Checkbutton(janela, text= "J/Psi").grid(row=3, column=0)
-ck4 = tk.Checkbutton(janela, text= "Psi'").grid(row=3, column=1)
-ck5 = tk.Checkbutton(janela, text= "Upsilon").grid(row=4, column=0)
+ck1 = tk.Checkbutton(janela, text= "Rho", command=gauss).grid(row=2, column=0)
+ck2 = tk.Checkbutton(janela, text= "Phi", command=gauss).grid(row=2, column=1)
+ck3 = tk.Checkbutton(janela, text= "J/Psi", command=gauss).grid(row=3, column=0)
+ck4 = tk.Checkbutton(janela, text= "Psi'", command=gauss).grid(row=3, column=1)
+ck5 = tk.Checkbutton(janela, text= "Upsilon", command=gauss).grid(row=4, column=0)
 ck6 = tk.Checkbutton(janela, text= "Z", command=breitwigner).grid(row=4, column=1)
 ck7 = tk.Checkbutton(janela, text= "Todos").grid(row=5, column=0)
 #----------------------------------------------------------------------------------------------------------------------------
@@ -80,4 +83,3 @@ tk.Label(janela, image=tkimage).grid(row=1, column=2, rowspan=5)
 
 janela.geometry("800x600")
 janela.mainloop() #mantém a janela aberta
-
