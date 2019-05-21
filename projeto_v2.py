@@ -152,7 +152,7 @@ def Calcular1():
     s = str(first + second + third + fourth + fifth)
     messagebox.showinfo("IMPORTANTE!", s)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
-'''def Calcular2():
+def Calcular2():
     sigma = float(sigma1.get())
     media = float(media1.get())
     
@@ -161,10 +161,15 @@ def Calcular1():
     y = histogram[0]
     x = 0.5*( histogram[1][0:-1] + histogram[1][1:])
     
-    initials = [sigma, media]
-    best, covariance = curve_fit(norm, x, y, p0=initials, sigma=np.sqrt(y))
-    error = np.sqrt(np.diag(covariance))
-    plt.plot(x, norm(x, *best), 'r-', label='gamma = {}, M = {}'.format(best[0], best[1]))
+    mu, std = norm.fit(x)
+    print(mu, std)
+    x = np.linspace(low_lim, up_lim, 100)
+    p = norm.pdf(x, mu, std)
+    plt.plot(x, p, 'k', linewidth=2)
+    #initials = [sigma, media]
+    #best, covariance = curve_fit(norm, x, y, p0=initials, sigma=np.sqrt(y))
+    #error = np.sqrt(np.diag(covariance))
+    #plt.plot(x, norm(x, *best), 'r-', label='gamma = {}, M = {}'.format(best[0], best[1]))
     plt.yscale("log")
     plt.xlabel('Massa Invariante (log10) [GeV]')
     plt.ylabel('Número de eventos (log10)')
@@ -175,13 +180,13 @@ def Calcular1():
     tkimage = ImageTk.PhotoImage(img)
     Label(janela, image=tkimage).grid(row=1, column=2, rowspan=5)
     
-    first = "Valor de gamma (FWMH) = {:4.4f} +- {:4.4f} \n".format(best[0], error[0])
-    second = "Valor onde a distribuição M é máxima: = {:4.4f} +- {:4.4f} \n".format(best[1], error[1])
-    third = "a = {:4.4f} +- {:4.4f} \n".format(best[2], error[2])
-    fourth = "b = {:4.4f} +- {:4.4f} \n".format(best[3], error[3])
-    fifth = "A = {:4.4f} +- {:4.4f} \n".format(best[4], error[4])
-    s = str(first + second + third + fourth + fifth)
-    messagebox.showinfo("IMPORTANTE!", s)'''
+    #first = "Valor de gamma (FWMH) = {:4.4f} +- {:4.4f} \n".format(best[0], error[0])
+    #second = "Valor onde a distribuição M é máxima: = {:4.4f} +- {:4.4f} \n".format(best[1], error[1])
+    #third = "a = {:4.4f} +- {:4.4f} \n".format(best[2], error[2])
+    #fourth = "b = {:4.4f} +- {:4.4f} \n".format(best[3], error[3])
+    #fifth = "A = {:4.4f} +- {:4.4f} \n".format(best[4], error[4])
+    #s = str(first + second + third + fourth + fifth)
+    #messagebox.showinfo("IMPORTANTE!", s)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Breitwigner():
     canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
