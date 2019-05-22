@@ -35,6 +35,9 @@ low_lim = -0.5
 up_lim = 2.5
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
+'''def gaussiana(x, media, sigma, a, b):
+    return a*(np.exp(-0.5*(((x-media)/sigma)**2)))/(sigma*np.sqrt(2*np.pi))+b'''
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def breitwigner(E, gamma, M, a, b, A):
     return a*E+b+A*((2*np.sqrt(2)*M*gamma*np.sqrt(M**2*(M**2+gamma**2)))/(np.pi*np.sqrt(M**2+np.sqrt(M**2*(M**2+gamma**2)))))/((E**2-M**2)**2+M**2*gamma**2)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -46,27 +49,27 @@ def Verifica():
         # Limite para o pico Rho
         low_lim = -0.15
         up_lim = -0.05
-        Gauss()
+        Breitwigner()
     elif (c1.get() == 0 and c2.get() == 1 and c3.get() == 0 and c4.get() == 0 and c5.get() == 0 and c6.get() == 0):
         # Limite para o pico Phi
         low_lim = -0.09
         up_lim = 0.09
-        Gauss()
+        Breitwigner()
     elif (c1.get() == 0 and c2.get() == 0 and c3.get() == 1 and c4.get() == 0 and c5.get() == 0 and c6.get() == 0):
         # Limite para o pico J/Psi
-        low_lim = 0.43
-        up_lim = 0.55
-        Gauss()
+        low_lim = 0.47
+        up_lim = 0.52
+        Breitwigner()
     elif (c1.get() == 0 and c2.get() == 0 and c3.get() == 0 and c4.get() == 1 and c5.get() == 0 and c6.get() == 0):
         # Limite para o pico Psi'
         low_lim = 0.51
         up_lim = 0.62
-        Gauss()
+        Breitwigner()
     elif (c1.get() == 0 and c2.get() == 0 and c3.get() == 0 and c4.get() == 0 and c5.get() == 1 and c6.get() == 0):
         # Limite para o pico Upsilon
         low_lim = 0.96
-        up_lim = 1.05
-        Gauss()
+        up_lim = 0.99
+        Breitwigner()
     elif (c1.get() == 0 and c2.get() == 0 and c3.get() == 0 and c4.get() == 0 and c5.get() == 0 and c6.get() == 1):
         # Limite para o pico Z
         low_lim = 1.85
@@ -74,6 +77,9 @@ def Verifica():
         Breitwigner()
     else:
         canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
+        low_lim = -0.5
+        up_lim = 2.5
+        Imp_Graf()
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Abrir():
     global ds
@@ -112,9 +118,9 @@ def Imp_Graf():
     plt.yscale('log')
     plt.xlabel('log10(Massa invariante) [log10(GeV)]')
     plt.ylabel('Número de eventos [log10]')
-    plt.savefig('Hist.png') #Salva o gráfico como uma imagem PNG.
+    plt.savefig('Hist0.png') #Salva o gráfico como uma imagem PNG.
     plt.show()
-    img = Image.open("Hist.png")
+    img = Image.open("Hist0.png")
     tkimage = ImageTk.PhotoImage(img)
     Label(janela, image=tkimage).grid(row=1, column=2, rowspan=5)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -133,7 +139,7 @@ def Calcular1():
     initials = [gamma, M, a, b, A]
     best, covariance = curve_fit(breitwigner, x, y, p0=initials, sigma=np.sqrt(y))
     error = np.sqrt(np.diag(covariance))
-    plt.plot(x, breitwigner(x, *best), 'r-', label='gamma = {}, M = {}'.format(best[0], best[1]))
+    plt.plot(x, breitwigner(x, *best), 'r-')
     plt.yscale("log")
     plt.xlabel('Massa Invariante (log10) [GeV]')
     plt.ylabel('Número de eventos (log10)')
@@ -152,7 +158,7 @@ def Calcular1():
     s = str(first + second + third + fourth + fifth)
     messagebox.showinfo("IMPORTANTE!", s)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
-def Calcular2():
+'''def Calcular2():
     sigma = float(sigma1.get())
     media = float(media1.get())
     
@@ -161,15 +167,10 @@ def Calcular2():
     y = histogram[0]
     x = 0.5*( histogram[1][0:-1] + histogram[1][1:])
     
-    mu, std = norm.fit(x)
-    print(mu, std)
-    x = np.linspace(low_lim, up_lim, 100)
-    p = norm.pdf(x, mu, std)
-    plt.plot(x, p, 'k', linewidth=2)
-    #initials = [sigma, media]
-    #best, covariance = curve_fit(norm, x, y, p0=initials, sigma=np.sqrt(y))
-    #error = np.sqrt(np.diag(covariance))
-    #plt.plot(x, norm(x, *best), 'r-', label='gamma = {}, M = {}'.format(best[0], best[1]))
+    initials = [media, sigma, 1, 500]
+    best, covariance = curve_fit(gaussiana, x, y, p0=initials, sigma=np.sqrt(y))
+    error = np.sqrt(np.diag(covariance))
+    plt.plot(x, gaussiana(x, *best), 'r-')
     plt.yscale("log")
     plt.xlabel('Massa Invariante (log10) [GeV]')
     plt.ylabel('Número de eventos (log10)')
@@ -180,13 +181,13 @@ def Calcular2():
     tkimage = ImageTk.PhotoImage(img)
     Label(janela, image=tkimage).grid(row=1, column=2, rowspan=5)
     
-    #first = "Valor de gamma (FWMH) = {:4.4f} +- {:4.4f} \n".format(best[0], error[0])
-    #second = "Valor onde a distribuição M é máxima: = {:4.4f} +- {:4.4f} \n".format(best[1], error[1])
-    #third = "a = {:4.4f} +- {:4.4f} \n".format(best[2], error[2])
-    #fourth = "b = {:4.4f} +- {:4.4f} \n".format(best[3], error[3])
+    first = "Valor de sigma (FWMH) = {:4.4f} +- {:4.4f} \n".format(best[0], error[0])
+    second = "Valor onde a distribuição M é máxima: = {:4.4f} +- {:4.4f} \n".format(best[1], error[1])
+    third = "a = {:4.4f} +- {:4.4f} \n".format(best[2], error[2])
+    fourth = "b = {:4.4f} +- {:4.4f} \n".format(best[3], error[3])
     #fifth = "A = {:4.4f} +- {:4.4f} \n".format(best[4], error[4])
-    #s = str(first + second + third + fourth + fifth)
-    #messagebox.showinfo("IMPORTANTE!", s)
+    s = str(first + second + third + fourth)
+    messagebox.showinfo("IMPORTANTE!", s)'''
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Breitwigner():
     canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
@@ -208,7 +209,7 @@ def Breitwigner():
     
     Button(canvas, text="Calcular Fit", command=Calcular1).grid(row=11, column=1)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
-def Gauss():
+'''def Gauss():
     canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
     
     Label(canvas, text= "Entre com o valor da largura a meia altura (FWHM) do pico:").grid(row=6, column=0, columnspan=2)
@@ -217,7 +218,7 @@ def Gauss():
     Label(janela, text= "Entre com o valor da posição do máximo da distribuição:").grid(row=7, column=0, columnspan=2)
     Entry(canvas, textvar=media1).grid(row=7, column=2)
         
-    Button(canvas, text="Calcular Fit", command=Calcular2).grid(row=8, column=1)
+    Button(canvas, text="Calcular Fit", command=Calcular2).grid(row=8, column=1)'''
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 Button(janela, text='Abrir arquivo', font=('Times', '12', 'bold'), width = 15, command=Abrir).grid(row=0, column=0)
 
