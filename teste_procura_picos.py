@@ -76,6 +76,7 @@ plt.show()
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+from scipy.signal import find_peaks
 
 ds = pd.read_csv('DoubleMuRun2011A.csv')
 invariant_mass_1 = ds['M']
@@ -100,10 +101,13 @@ plt.title('The histogram of the invariant masses of two muons \n')
 plt.show()
 
 
-peaks, _ = find_peaks(n_hist, distance=150)
-np.diff(peaks)
-plt.plot(x)
-plt.plot(peaks, x[peaks], "x")
+peaks, properties = find_peaks(n_hist, distance = 15, height = 14900, width=1)
+
+print(peaks)
+print(np.diff(peaks))
+plt.plot(n_hist)
+plt.plot(peaks, n_hist[peaks], "x")
+plt.yscale('log')
 plt.show()
 
 
