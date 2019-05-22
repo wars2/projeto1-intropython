@@ -85,7 +85,7 @@ def Abrir():
     global ds
     
     file =  filedialog.askopenfilename(initialdir = "/",title = "Abrir arquivo",filetypes = (("csv files","*.csv"),("CSV files", "*.csv")))
-    ds = pd.read_csv(file) #Lê o arquivo com os dados.
+    ds = pd.read_csv(file, engine='python') #Lê o arquivo com os dados.
 
     Imp_Graf()
         
