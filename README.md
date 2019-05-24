@@ -4,7 +4,7 @@
 ## 2°
 ### Rodar o arquivo *projeto_v2.py*.
 ## 3°
-### Após a interface abrir, clique no botão *Abrir arquivo* e indique o local onde esta o arquivo de dados.
+### Após a interface abrir, clique no botão *Abrir arquivo* e indique o local onde se localiza o arquivo de dados.
 ## 4°
 ### Selecione o pico desejado para fazer o ajuste.
 ## 5°
@@ -12,4 +12,4 @@
 ## 6°
 ### Com todos os parametros preenchidos, clique em *Calcular fit*.
 ## 7°
-### Os parametros ajustados e suas respectivas incertezas estarão disponiveis na caixa de texto popup queaparecera apos o fit.
+### Os parametros ajustados e suas respectivas incertezas estarão disponiveis na caixa de texto popup que aparecerá após o ajuste.
