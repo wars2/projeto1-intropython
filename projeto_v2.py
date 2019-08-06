@@ -34,10 +34,6 @@ bins = 300
 low_lim = -0.5
 up_lim = 2.5
 
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------
-'''def gaussiana(x, media, sigma, a, b):
-    return a*(np.exp(-0.5*(((x-media)/sigma)**2)))/(sigma*np.sqrt(2*np.pi))+b'''
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def breitwigner(E, gamma, M, a, b, A):
     return a*E+b+A*((2*np.sqrt(2)*M*gamma*np.sqrt(M**2*(M**2+gamma**2)))/(np.pi*np.sqrt(M**2+np.sqrt(M**2*(M**2+gamma**2)))))/((E**2-M**2)**2+M**2*gamma**2)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -110,7 +106,7 @@ def Imp_Graf():
     weights = []
     for i in ds["M"]:
         weights.append(bins/np.log(10)/i)
-
+    
     plt.title('Histograma da massa invariante de dois múons \n')
     histogram = plt.hist(inv_mass_log, bins=bins, range=(low_lim, up_lim), weights=weights, color="cyan")
     y = histogram[0]
@@ -118,6 +114,12 @@ def Imp_Graf():
     plt.yscale('log')
     plt.xlabel('log10(Massa invariante) [log10(GeV)]')
     plt.ylabel('Número de eventos [log10]')
+    plt.annotate('Rho', xy=(-0.11,700000))
+    plt.annotate('Phi', xy=(0.010,300000))
+    plt.annotate('J/Psi', xy=(0.49,700000))
+    plt.annotate('Psi´', xy=(0.57,300000))
+    plt.annotate('Upsilon', xy=(0.975,500000))
+    plt.annotate('Z', xy=(1.965,500000))
     plt.savefig('Hist0.png') #Salva o gráfico como uma imagem PNG.
     plt.show()
     img = Image.open("Hist0.png")
@@ -158,37 +160,6 @@ def Calcular1():
     s = str(first + second + third + fourth + fifth)
     messagebox.showinfo("IMPORTANTE!", s)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
-'''def Calcular2():
-    sigma = float(sigma1.get())
-    media = float(media1.get())
-    
-    limitedmasses = inv_mass_log[(inv_mass_log > low_lim) & (inv_mass_log < up_lim)]
-    histogram = plt.hist(limitedmasses, bins=bins, range=(low_lim,up_lim), color="cyan")
-    y = histogram[0]
-    x = 0.5*( histogram[1][0:-1] + histogram[1][1:])
-    
-    initials = [media, sigma, 1, 500]
-    best, covariance = curve_fit(gaussiana, x, y, p0=initials, sigma=np.sqrt(y))
-    error = np.sqrt(np.diag(covariance))
-    plt.plot(x, gaussiana(x, *best), 'r-')
-    plt.yscale("log")
-    plt.xlabel('Massa Invariante (log10) [GeV]')
-    plt.ylabel('Número de eventos (log10)')
-    plt.title('Ajuste Gaussiano')
-    plt.savefig("Hist.png")
-    plt.show()
-    img = Image.open("Hist.png")
-    tkimage = ImageTk.PhotoImage(img)
-    Label(janela, image=tkimage).grid(row=1, column=2, rowspan=5)
-    
-    first = "Valor de sigma (FWMH) = {:4.4f} +- {:4.4f} \n".format(best[0], error[0])
-    second = "Valor onde a distribuição M é máxima: = {:4.4f} +- {:4.4f} \n".format(best[1], error[1])
-    third = "a = {:4.4f} +- {:4.4f} \n".format(best[2], error[2])
-    fourth = "b = {:4.4f} +- {:4.4f} \n".format(best[3], error[3])
-    #fifth = "A = {:4.4f} +- {:4.4f} \n".format(best[4], error[4])
-    s = str(first + second + third + fourth)
-    messagebox.showinfo("IMPORTANTE!", s)'''
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Breitwigner():
     canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
     
@@ -208,17 +179,6 @@ def Breitwigner():
     Entry(canvas, textvar=A1).grid(row=10, column=2)
     
     Button(canvas, text="Calcular Fit", command=Calcular1).grid(row=11, column=1)
-#-----------------------------------------------------------------------------------------------------------------------------------------------------------
-'''def Gauss():
-    canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
-    
-    Label(canvas, text= "Entre com o valor da largura a meia altura (FWHM) do pico:").grid(row=6, column=0, columnspan=2)
-    Entry(canvas, textvar=sigma1).grid(row=6, column=2)
-    
-    Label(janela, text= "Entre com o valor da posição do máximo da distribuição:").grid(row=7, column=0, columnspan=2)
-    Entry(canvas, textvar=media1).grid(row=7, column=2)
-        
-    Button(canvas, text="Calcular Fit", command=Calcular2).grid(row=8, column=1)'''
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 Button(janela, text='Abrir arquivo', font=('Times', '12', 'bold'), width = 15, command=Abrir).grid(row=0, column=0)
 
