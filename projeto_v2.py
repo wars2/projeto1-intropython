@@ -34,6 +34,14 @@ bins = 300
 low_lim = -0.5
 up_lim = 2.5
 
+def Chama_img():
+    global img
+    global tkimage
+    
+    img = Image.open("Hist0.png")
+    tkimage = ImageTk.PhotoImage(img)
+    Label(janela, image=tkimage).grid(row=1, column=2, rowspan=5)
+#-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def breitwigner(E, gamma, M, a, b, A):
     return a*E+b+A*((2*np.sqrt(2)*M*gamma*np.sqrt(M**2*(M**2+gamma**2)))/(np.pi*np.sqrt(M**2+np.sqrt(M**2*(M**2+gamma**2)))))/((E**2-M**2)**2+M**2*gamma**2)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -75,7 +83,7 @@ def Verifica():
         canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
         low_lim = -0.5
         up_lim = 2.5
-        Imp_Graf()
+        Chama_img()
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Abrir():
     global ds
@@ -87,11 +95,11 @@ def Abrir():
         
     Label(janela, text= "Escolha o pico para calcular o Fit?").grid(row=1, column=0, columnspan=2)
     
-    Checkbutton(janela, text= "Rho", variable = c1, command=Verifica).grid(row=2, column=0)
-    Checkbutton(janela, text= "Phi", variable = c2, command=Verifica).grid(row=2, column=1)
-    Checkbutton(janela, text= "J/Psi", variable = c3, command=Verifica).grid(row=3, column=0)
-    Checkbutton(janela, text= "Psi'", variable = c4, command=Verifica).grid(row=3, column=1)
-    Checkbutton(janela, text= "Upsilon", variable = c5, command=Verifica).grid(row=4, column=0)
+    Checkbutton(janela, text= u"\u03c1", variable = c1, command=Verifica).grid(row=2, column=0)     # u"\u03c1" = código unicode para a letra grega Rho.
+    Checkbutton(janela, text= u"\u03a6", variable = c2, command=Verifica).grid(row=2, column=1)     # u"\u03a6" = código unicode para a letra grega Phi.
+    Checkbutton(janela, text= u"J/\u03c8", variable = c3, command=Verifica).grid(row=3, column=0)   # u"J/\u03c8" = código unicode para a letra grega J/Psi.
+    Checkbutton(janela, text= u"\u03c8'", variable = c4, command=Verifica).grid(row=3, column=1)    # u"\u03c8'" = código unicode para a letra grega Psi'.
+    Checkbutton(janela, text= u"\u03c5", variable = c5, command=Verifica).grid(row=4, column=0)     # u"\u03c5" = código unicode para a letra grega Upsilon.
     Checkbutton(janela, text= "Z", variable = c6, command=Verifica).grid(row=4, column=1)
     Checkbutton(janela, text= "Todos (Estamos trabalhano nisto!)", state = DISABLED).grid(row=5, column=0, columnspan=2)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,12 +122,12 @@ def Imp_Graf():
     plt.yscale('log')
     plt.xlabel('log10(Massa invariante) [log10(GeV)]')
     plt.ylabel('Número de eventos [log10]')
-    plt.annotate(r'$\rho$', xy=(-0.11,700000))
-    plt.annotate(r'$\phi$', xy=(0.010,300000))
+    plt.annotate(r'$\rho$', xy=(-0.11,300000))
+    plt.annotate(r'$\Phi$', xy=(0.010,300000))
     plt.annotate(r'$J/\psi$', xy=(0.49,700000))
-    plt.annotate(r'$\psi´$', xy=(0.57,300000))
-    plt.annotate(r'$\upsilon$', xy=(0.975,500000))
-    plt.annotate('Z', xytext=(1.965,50000), xy=(0.975, 550000),  arrowprops=dict(facecolor='black', shrink=0.05))
+    plt.annotate(r'$\psi$´', xy=(0.57,100000))
+    plt.annotate(r'$\upsilon$', xy=(0.975,200000))
+    plt.annotate('Z', xy=(1.965,30000))
     plt.savefig('Hist0.png') #Salva o gráfico como uma imagem PNG.
     plt.show()
     img = Image.open("Hist0.png")
