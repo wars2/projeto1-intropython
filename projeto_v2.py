@@ -81,6 +81,7 @@ def Verifica():
         Breitwigner()
     else:
         canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
+        canvas2 = Canvas(janela, width=150, height=40).grid(row=0, column=1)
         low_lim = -0.5
         up_lim = 2.5
         Chama_img()
@@ -93,10 +94,10 @@ def Abrir():
 
     Imp_Graf()
         
-    Label(janela, text= "Escolha o pico para calcular o Fit?").grid(row=1, column=0, columnspan=2)
+    Label(janela, text= "Escolha o pico para calcular o ajuste:").grid(row=1, column=0, columnspan=2)
     
-    Checkbutton(janela, text= u"\u03c1", variable = c1, command=Verifica).grid(row=2, column=0)     # u"\u03c1" = código unicode para a letra grega Rho.
-    Checkbutton(janela, text= u"\u03a6", variable = c2, command=Verifica).grid(row=2, column=1)     # u"\u03a6" = código unicode para a letra grega Phi.
+    Checkbutton(janela, text= u"\u03c1", variable = c1, command=Verifica).grid( row=2, column=0)     # u"\u03c1" = código unicode para a letra grega Rho.
+    Checkbutton(janela, text= u"\u03a6", variable = c2, command=Verifica).grid( row=2, column=1)     # u"\u03a6" = código unicode para a letra grega Phi.
     Checkbutton(janela, text= u"J/\u03c8", variable = c3, command=Verifica).grid(row=3, column=0)   # u"J/\u03c8" = código unicode para a letra grega J/Psi.
     Checkbutton(janela, text= u"\u03c8'", variable = c4, command=Verifica).grid(row=3, column=1)    # u"\u03c8'" = código unicode para a letra grega Psi'.
     Checkbutton(janela, text= u"\u03c5", variable = c5, command=Verifica).grid(row=4, column=0)     # u"\u03c5" = código unicode para a letra grega Upsilon.
@@ -128,7 +129,7 @@ def Imp_Graf():
     plt.annotate(r'$\psi$´', xy=(0.57,100000))
     plt.annotate(r'$\upsilon$', xy=(0.975,200000))
     plt.annotate('Z', xy=(1.965,30000))
-    plt.rcParams['figure.figsize'] = (7,5)
+    plt.rcParams['figure.figsize'] = (8,6)  # Redimensiona a o gráfico padrão para o tamanho fixo.
     plt.savefig('Hist0.png') #Salva o gráfico como uma imagem PNG.
     plt.show()
     img = Image.open("Hist0.png")
@@ -155,6 +156,7 @@ def Calcular1():
     plt.xlabel('Massa Invariante (log10) [GeV]')
     plt.ylabel('Número de eventos (log10)')
     plt.title('Ajuste de Breit-Wigner')
+    plt.rcParams['figure.figsize'] = (8,6)
     plt.savefig("Hist.png")
     plt.show()
     img = Image.open("Hist.png")
@@ -170,7 +172,7 @@ def Calcular1():
     messagebox.showinfo("IMPORTANTE!", s)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Breitwigner():
-    canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=3, stick=N+S+E+W)
+    canvas = Canvas(janela).grid(row=6, column=0, rowspan=7, columnspan=2, stick=N+S+E+W)
     
     Label(canvas, text= "Entre com o valor da largura a meia altura (FWHM) do pico:").grid(row=6, column=0, columnspan=2)
     Entry(canvas, textvar=gama1).grid(row=6, column=2)
@@ -187,7 +189,7 @@ def Breitwigner():
     Label(canvas, text= "Entre com o valor do parâmetro A da altura da distribuição de Breit-Wigner:").grid(row=10, column=0, columnspan=2)
     Entry(canvas, textvar=A1).grid(row=10, column=2)
     
-    Button(canvas, text="Calcular Fit", command=Calcular1).grid(row=11, column=1)
+    Button(canvas, text="Calcular Fit", font=('Times', '12', 'bold'), width = 15, command=Calcular1).grid(row=0, column=1)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 Button(janela, text='Abrir arquivo', font=('Times', '12', 'bold'), width = 15, command=Abrir).grid(row=0, column=0)
 
