@@ -128,7 +128,7 @@ def Imp_Graf():
     plt.annotate(r'$\psi$´', xy=(0.57,100000))
     plt.annotate(r'$\upsilon$', xy=(0.975,200000))
     plt.annotate('Z', xy=(1.965,30000))
-    plt.rcParams['figure.figsize'] = (9,5)
+    plt.rcParams['figure.figsize'] = (7,5)
     plt.savefig('Hist0.png') #Salva o gráfico como uma imagem PNG.
     plt.show()
     img = Image.open("Hist0.png")
