@@ -13,3 +13,15 @@
 ### Com todos os parametros preenchidos, clique em *Calcular fit*.
 ## 7°
 ### Os parametros ajustados e suas respectivas incertezas estarão disponiveis na caixa de texto popup que aparecerá após o ajuste.
+
+
+
+
+<iframe src="assets/flowers.html"
+    sandbox="allow-same-origin allow-scripts"
+    width="100%"
+    height="500"
+    scrolling="no"
+    seamless="seamless"
+    frameborder="0">
+</iframe>
