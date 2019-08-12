@@ -14,29 +14,6 @@
 ## 7°
 ### Os parametros ajustados e suas respectivas incertezas estarão disponiveis na caixa de texto popup que aparecerá após o ajuste.
 
-
-lists
-
-1. First item
-2. Second item
-3. Third item
-
-* First item
-* Second item
-* Third item
-
-
-**strong** text
-
-_emphasis_ text
-
-`inline` code
-
-[link](http://jekyllrb.com) text
-
-![Alt tag](/path/to/image.jpg)
-
-
 <iframe src="assets/flowers.html"
     sandbox="allow-same-origin allow-scripts"
     width="100%"
