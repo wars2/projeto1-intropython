@@ -35,3 +35,13 @@ _emphasis_ text
 [link](http://jekyllrb.com) text
 
 ![Alt tag](/path/to/image.jpg)
+
+
+<iframe src="/__pages/flowers.html"
+    sandbox="allow-same-origin allow-scripts"
+    width="100%"
+    height="500"
+    scrolling="no"
+    seamless="seamless"
+    frameborder="0">
+</iframe>
