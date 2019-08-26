@@ -32,8 +32,10 @@ janela.title('Curva de Fit') # Define o título da janela.
 
 if (system == "Linux"):
     janela.wm_iconbitmap('@iconpy.xbm') # Insere o ícone nas janelas do programa.
-else:
+elif (system == 'Windows'):
     janela.wm_iconbitmap('iconpy.ico') # Insere o ícone nas janelas do programa.
+else:
+    print("Não implementamos este programa para MAC ou outros sistemas operacionais.")
 
 e1 = StringVar()
 e2 = StringVar()
