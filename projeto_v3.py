@@ -8,6 +8,7 @@ Este programa foi desenvolvido durante as aulas de Introdução à Python lecion
 """
 
 # Importa todos os módulos necessários para a execução do programa
+import platform
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
@@ -23,11 +24,17 @@ ds = pd.DataFrame()
 x = ()
 y = ()
 inv_mass_log = ()
+system = platform.system() # Diz qual SO está sendo utilizado.
 
 # Criação da janela com o tkinter.
 janela = Tk() # Cria uma janela
 janela.title('Curva de Fit') # Define o título da janela.
-janela.wm_iconbitmap("iconpy.ico") # Insere o ícone nas janelas do programa.
+
+if (system == "Linux"):
+    janela.wm_iconbitmap('@iconpy.xbm') # Insere o ícone nas janelas do programa.
+else:
+    janela.wm_iconbitmap('iconpy.ico') # Insere o ícone nas janelas do programa.
+
 e1 = StringVar()
 e2 = StringVar()
 e3 = StringVar()
