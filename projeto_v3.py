@@ -1,3 +1,12 @@
+"""
+Universidade do Estado do Rio de Janeiro.
+Instituto de Física Armando Dias Tavares.
+Professoras: Clemencia M. Herrera e Helena B. Malbouisson
+Autores: Apóllo V. da Silva, Gabriel M. S. Campos, Hamilton S. Gama Filho, Hugo B. S. Borges,
+         Luiz Carlos R. Silva Junior e Miguel A. G. Pereira.
+Este programa foi desenvolvido durante as aulas de Introdução à Python lecionada na UERJ.
+"""
+
 # Importa todos os módulos necessários para a execução do programa
 from tkinter import *
 from tkinter import filedialog
@@ -18,7 +27,7 @@ inv_mass_log = ()
 # Criação da janela com o tkinter.
 janela = Tk() # Cria uma janela
 janela.title('Curva de Fit') # Define o título da janela.
-janela.wm_iconbitmap("iconpy.ico")
+janela.wm_iconbitmap("iconpy.ico") # Insere o ícone nas janelas do programa.
 e1 = StringVar()
 e2 = StringVar()
 e3 = StringVar()
@@ -28,8 +37,6 @@ e6 = StringVar()
 e7 = StringVar()
 e8 = StringVar()
 
-sigme3 = StringVar()
-media1 = StringVar()
 c1 = IntVar()
 c2 = IntVar()
 c3 = IntVar()
@@ -131,13 +138,9 @@ def Escolher_dist(*args):
     elif (varfit.get() == options[1]):
         apagar()
         Entrar_dados2() # Duas Gaussianas + Exponencial
-        messagebox.showinfo("Atenção!", "Implementar esta parte!")
     elif (valor == options[2]):
         apagar()
         Entrar_dados3() # Crystalball + Exponencial
-        messagebox.showinfo("Atenção!", "Implementar esta parte!")
-#    else:
-#        messagebox.showinfo("Atenção!", "Selecione uma distribuição para calcular o ajuste!")
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Imp_Graf():
     global x
