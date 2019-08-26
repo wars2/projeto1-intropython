@@ -19,8 +19,8 @@
 
 <iframe src="assets/histograma_massa_invariante.html"
     sandbox="allow-same-origin allow-scripts"
-    width="100%"
-    height="100%"
+    width="600"
+    height="1350"
     scrolling="no"
     seamless="seamless"
     frameborder="0">
