@@ -86,7 +86,6 @@ def convergencia(f, funcao, best, error, n):
     if (valor == options[1]):     # Relativo a escolher a distribuição Duas Gaussianas + Exponencial
         ch2, pval = chisquare(y, funcao(x, *best))
         test = ch2 /(bins - 8)
-        print(test)
         discrepancia = np.absolute(best[1] - esperado)
         discrepancia1 = np.absolute(best[4] - esperado1)
         erro_padrao = np.sqrt(error[1]**2 + err_esperado**2)
@@ -102,7 +101,7 @@ def convergencia(f, funcao, best, error, n):
             seventh = ("O fit e bom!")
         else:
             seventh = ("O fit e ruim! Tente outros valores.")
-        message2 = str(first + second + third + fourth + fifth + sixth + seventh)
+        message2 = str(first +"\n"+ second +"\n"+ third +"\n"+ fourth +"\n"+ fifth +"\n"+ sixth +"\n"+ seventh)
 
     else:
         ch2, pval = chisquare(y, funcao(x, *best))
@@ -118,7 +117,7 @@ def convergencia(f, funcao, best, error, n):
             fifth = ("O fit e bom!")
         else:
             fifth = ("O fit e ruim! Tente outros valores.")
-        message2 = str(first + second + third + fourth + fifth)
+        message2 = str(first +"\n"+ second +"\n"+ third +"\n"+ fourth +"\n"+ fifth)
     return fit, message2
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def apagar():
@@ -158,7 +157,7 @@ def Verificar(): # Método para verificar qual pico foi selecionado.
         # Limite para o pico Upsilon
         low_lim = 0.92
         up_lim = 1.02
-        bins = 70
+        bins = 50
         Escolher_fit()
     elif (c1.get() == 0 and c2.get() == 0 and c3.get() == 0 and c4.get() == 0 and c5.get() == 0 and c6.get() == 1):
         # Limite para o pico Z
@@ -198,7 +197,6 @@ def Escolher_fit():
                "CrystalBall + Exponencial"]
     varfit = StringVar(janela)
     OptionMenu(janela, varfit, options[0], options[1], options[2]).grid(row=6, column=1)
-#    varfit.set(options[0])
     varfit.trace("w",Escolher_dist)
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Escolher_dist(*args):
@@ -220,7 +218,6 @@ def Imp_Graf():
     global bins
     
     inv_mass_log = np.log10(np.sqrt(2*ds.pt1*ds.pt2*(np.cosh(ds.eta1-ds.eta2)-np.cos(ds.phi1-ds.phi2))))
-#    bins=300
     weights = []
     for i in ds["M"]:
         weights.append(bins/np.log(10)/i)
@@ -303,15 +300,15 @@ def Entrar_dados2(): # Duas Gaussianas + Exponencial - 8 graus de liberdade
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
 def Entrar_dados3(): # Crystalball + Exponencial - 6 graus de liberdade
     Label(janela, text= "Entre com o valor que define como a função decresce no pico:").grid(row=7, column=0, columnspan=5)
-    e1.set("1.6")
+    e1.set("1")
     Entry(janela, textvar=e1).grid(row=7, column=5)
     
     Label(janela, text= "Entre com o valor de n:").grid(row=8, column=0, columnspan=5)
-    e2.set("0.9")
+    e2.set("0")
     Entry(janela, textvar=e2).grid(row=8, column=5)
 
     Label(janela, text= "Entre com o valor da posição do centro do pico:").grid(row=9, column=0, columnspan=5)
-    e3.set("3.1")
+    e3.set("3.7")
     Entry(janela, textvar=e3).grid(row=9, column=5)
 
     Label(janela, text= "Entre com o valor do desvio padrão referente ao pico:").grid(row=10, column=0, columnspan=5)
@@ -359,7 +356,6 @@ def Calcular1(): # Breit-Wigner
     
     # Diferença entre os valores iniciais e o melhor valor após o 1º curve_fit.
     dif = [np.absolute(best[0] - initials[0]), np.absolute(best[1] - initials[1]), np.absolute(best[2] - initials[2]), np.absolute(best[3] - initials[3]), np.absolute(best[4] - initials[4])]
-    #print(dif)
     # Iteração para convergir para o melhor valor dos parâmetros.
     i = int
     i = 0
@@ -369,7 +365,6 @@ def Calcular1(): # Breit-Wigner
         error = np.sqrt(np.diag(covariance))
         # Atualização do valor da diferença, para que haja convergência da iteração.
         dif = [np.absolute(best[0] - initials[0]), np.absolute(best[1] - initials[1]), np.absolute(best[2] - initials[2]), np.absolute(best[3] - initials[3]), np.absolute(best[4] - initials[4])]
-        #print(dif)
         i += 1
         iteration = str("Quantidade de iteração: {:1.1f} \n".format(i))
     
@@ -378,7 +373,7 @@ def Calcular1(): # Breit-Wigner
     third = "a = {:4.4f} +- {:4.4f} \n".format(best[2], error[2])
     fourth = "b = {:4.4f} +- {:4.4f} \n".format(best[3], error[3])
     fifth = "A = {:4.4f} +- {:4.4f} \n".format(best[4], error[4])
-    message1 = str(first + second + third + fourth + fifth)
+    message1 = str(first +"\n"+ second +"\n"+ third +"\n"+ fourth +"\n"+ fifth)
     
     fit, message2 = convergencia(i, f.breitwigner, best, error, 5)
     
@@ -417,7 +412,6 @@ def Calcular2(): # Duas Gaussianas + Exponencial
         
     # Diferença entre os valores iniciais e o melhor valor após o 1º curve_fit.
     dif = [np.absolute(best[0] - initials[0]), np.absolute(best[1] - initials[1]), np.absolute(best[2] - initials[2]), np.absolute(best[3] - initials[3]), np.absolute(best[4] - initials[4]), np.absolute(best[5] - initials[5]), np.absolute(best[6] - initials[6]), np.absolute(best[7] - initials[7])]
-    #print(dif)
     # Iteração para convergir para o melhor valor dos parâmetros.
     i = int
     i = 0
@@ -427,7 +421,6 @@ def Calcular2(): # Duas Gaussianas + Exponencial
         error = np.sqrt(np.diag(covariance))
         # Atualização do valor da diferença, para que haja convergência da iteração.
         dif = [np.absolute(best[0] - initials[0]), np.absolute(best[1] - initials[1]), np.absolute(best[2] - initials[2]), np.absolute(best[3] - initials[3]), np.absolute(best[4] - initials[4]), np.absolute(best[5] - initials[5]), np.absolute(best[6] - initials[6]), np.absolute(best[7] - initials[7])]
-        #print(dif)
         i += 1
         iteration = str("Quantidade de iteração: {:1.1f} \n".format(i))
     
@@ -439,7 +432,7 @@ def Calcular2(): # Duas Gaussianas + Exponencial
     sixth = "Valor de sigma2 = {:4.4f} +- {:4.4f} \n".format(best[5], error[5])
     sixth = "Valor da constante = {:4.4f} +- {:4.4f} \n".format(best[6], error[6])
     seventh = "Valor da inclinação = {:4.4f} +- {:4.4f} \n".format(best[7], error[7])
-    message1 = str(first + second + third + fourth + fifth + sixth + seventh)
+    message1 = str(first +"\n"+ second +"\n"+ third +"\n"+ fourth +"\n"+ fifth +"\n"+ sixth +"\n"+ seventh)
     
     fit, message2 = convergencia(i, f.doublegaussianexpo, best, error, 8)
     
@@ -465,7 +458,7 @@ def Calcular3(): # Crystal Ball + Exponencial
     x = 0.5*( histogram[1][0:-1] + histogram[1][1:])
     
     initials = [a1, a2, a3, a4, a5, a6]
-    best, covariance = curve_fit(f.crystalexpo, x, y, p0=initials, sigma=np.sqrt(y))
+    best, covariance = curve_fit(f.crystalexpo, x, y, p0=initials, sigma=np.sqrt(y), maxfev=50000)
     error = np.sqrt(np.diag(covariance))
     plt.plot(x, f.crystalexpo(x, *best), 'r-')
     plt.xlabel('Massa Invariante  [GeV]')
@@ -477,17 +470,15 @@ def Calcular3(): # Crystal Ball + Exponencial
     
     # Diferença entre os valores iniciais e o melhor valor após o 1º curve_fit.
     dif = [np.absolute(best[0] - initials[0]), np.absolute(best[1] - initials[1]), np.absolute(best[2] - initials[2]), np.absolute(best[3] - initials[3]), np.absolute(best[4] - initials[4]), np.absolute(best[5] - initials[5])]
-    #print(dif)
     # Iteração para convergir para o melhor valor dos parâmetros.
     i = int
     i = 0
     while (dif[0] > 0 and dif[1] > 0 and dif[2] > 0 and dif[3] > 0 and dif[4] > 0 and dif[5] and i <= 20):
         initials = [best[0], best[1], best[2], best[3], best[4], best[5]]
-        best, covariance = curve_fit(f.doublegaussianexpo, x, y, p0=initials, sigma=np.sqrt(y))
+        best, covariance = curve_fit(f.crystalexpo, x, y, p0=initials, sigma=np.sqrt(y))
         error = np.sqrt(np.diag(covariance))
         # Atualização do valor da diferença, para que haja convergência da iteração.
         dif = [np.absolute(best[0] - initials[0]), np.absolute(best[1] - initials[1]), np.absolute(best[2] - initials[2]), np.absolute(best[3] - initials[3]), np.absolute(best[4] - initials[4]), np.absolute(best[5] - initials[5])]
-        #print(dif)
         i += 1
         iteration = str("Quantidade de iteração: {:1.1f} \n".format(i))
     
@@ -498,9 +489,9 @@ def Calcular3(): # Crystal Ball + Exponencial
     fifth = "Valor da constante = {:4.4f} +- {:4.4f} \n".format(best[4], error[4])
     sixth = "Valor da inclinação = {:4.4f} +- {:4.4f} \n".format(best[5], error[5])
     
-    message1 = str(first + second + third + fourth + fifth + sixth)
+    message1 = str(first +"\n"+ second +"\n"+ third +"\n"+ fourth +"\n"+ fifth +"\n"+ sixth)
     
-    fit, message2 = convergencia(i, f.doublegaussianexpo, best, error, 6)
+    fit, message2 = convergencia(i, f.crystalexpo, best, error, 6)
     
     message = (message1+"\n"+iteration+"\n"+fit+"\n"+message2)
     messagebox.showinfo("ATENÇÃO!", message)
